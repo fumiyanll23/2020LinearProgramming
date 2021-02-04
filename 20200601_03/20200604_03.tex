@@ -1,0 +1,154 @@
+%%% 中村研ゼミ第3回（2020/6/4実施）
+%%% 使用テキスト: 田村明久、村松正和『最適化法』（共立出版）
+\documentclass[unicode, 12pt, aspectratio = 169]{beamer}
+\usepackage{bxdpx-beamer}
+
+%%% テーマの指定、省略時は default になる
+\usetheme[progressbar = frametitle]{metropolis}
+\usepackage{bm}
+\usepackage{color}
+\usepackage{ascmac}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+%%%  日本語フォントをゴシックに、数式フォントを太字に変更する
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\mathversion{bold}
+
+%%% 著者の情報など
+\title{第3回}
+\subtitle{線形計画問題に対する諸定理}
+\author{171-T7710　成田 史弥}
+\institute{工学部　数理工学科　城本研究室}
+\date{} % 省略すると自動挿入
+
+%%% 以下、スライド
+\begin{document}
+
+%%% cover page
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{発表内容}
+	\begin{enumerate}
+		\item 基本定理
+		\item 双対定理(duality theorem)
+		\item 相補性定理(complementary slackness theorem)
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{基本定理}
+		\begin{itembox}[l]{Th.2.1 基本定理}
+			実行可能で有界な線形計画問題は最適解をもつ.
+		\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対定理(duality theorem)}
+		\begin{itembox}[l]{Th.2.2 弱双対定理(weak duality theorem)}
+			主問題と双対問題のそれぞれの許容解 $\bf x$ と $\bf y$ に対して, 
+			\[
+				{\bf c}^T \bf x \ge {\bf b}^T \bf y
+			\]
+			が成立する.
+		\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対定理(duality theorem)}
+		\begin{itembox}[l]{Cor.2.1}
+			主（双対）問題が非有界であれば, 他方は実行不可能である.
+		\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対定理(duality theorem)}
+		\begin{itembox}[l]{Cor.2.2}
+			主問題と双対問題のそれぞれの許容解 ${\bf x}^*$ と ${\bf y}^*$ の目的関数値が一致するならば, 
+			${\bf x}^*$ と ${\bf y}^*$ はそれぞれ主最適解と双対最適解である.
+		\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対定理(duality theorem)}
+		e.g.2.3 \\
+		最小化 \ $-2x_1 - x_2 - x_3 \equiv f(\bf x)$ \\
+		条件 \ $-2x_1 - 2x_2 + x_3 \ge -4$ \\
+		\   $-2x_1 - 4x_3 \ge -4$ \\
+		\   $4x_1 - 3x_2 + x_3 \ge -1$ \\
+		\   $x_1 \ge 0, x_2 \ge 0, x_3 \ge 0.$
+		
+		最大化 \ $-4y_1 - 4y_2 - y_3 \equiv g(\bf y)$ \\
+		条件 \ $-2y_1 - 2y_2 + 4y_3 \le -2$ \\
+		\   $-2y_1 - 3y_3 \le -1$ \\
+		\   $y_1 - 4y_2 + y_3 \le -1$ \\
+		\   $y_1 \ge 0, y_2 \ge 0, y_3 \ge 0.$
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対定理(duality theorem)}
+		\begin{itembox}[l]{Th.2.3 双対定理(duality theorem)}
+			線形計画問題では, 主問題あるいは双対問題の一方が最適解をもつならば, 
+			他方も最適解をもち, それぞれの最適値は一致する.
+		\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{相補性定理(complementary slackness theorem)}
+	\begin{itembox}[l]{Th.2.4 相補性定理(complementary slackness theorem)}
+		主問題と双対問題のそれぞれの許容解 $\bf x$ と $\bf y$ がともに最適解であるための必要十分条件は, 
+		\[
+			{\bf x}^T (\bf c - A^T \bf y) = 0
+		\]
+		かつ
+		\[
+			(A \bf x - \bf b)^T = 0
+		\]
+		が成立することである.
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{相補性定理(complementary slackness theorem)}
+	N.B.2.10 \\
+	Th.2.4（相補性定理）の条件式は, それぞれ以下の様に書き換えられる: \vspace{1em} \\
+	各 $j = 1, \dots, n$ に対して, $\displaystyle \sum_{i=1}^m a_{ij} y_i = c_j$ または $x_j = 0$, \vspace{1em} \\
+	各 $i = 1, \dots, m$ に対して, $\displaystyle \sum_{j=1}^n a_{ij} x_j = b_i$ または $y_i = 0$. \vspace{1em} \\
+	これらの条件を合わせて相補性(complementary slackness)という.
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{相補性定理(complementary slackness theorem)}
+	N.B.2.11 \\
+	相補性定理は, 「許容解 $\bf x$ が最適解であるための必要十分条件は, $\bf x$ と相補性を満たす双対許容解が存在することである」
+	とも書き換えられる. \\
+	線形計画問題の最適性 = 主実行可能性 + 双対実行可能性 + 相補性
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{相補性定理(complementary slackness theorem)}
+	\begin{itembox}[l]{強相補性(strict complementary slakness)}
+		条件: \\
+		各 $j = 1, \dots, n$ に対して, $\displaystyle \sum_{i=1}^m a_{ij} y_i < c_j$ または $x_j > 0$, \vspace{1em} \\
+		各 $i = 1, \dots, m$ に対して, $\displaystyle \sum_{j=1}^n a_{ij} x_j > b_i$ または $y_i > 0$. \vspace{1em} \\
+		と相補性を合わせた条件を \\
+		強相補性(strict complementary slakness) \\
+		という.
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{相補性定理(complementary slackness theorem)}
+		\begin{itembox}[l]{Th.2.5}
+			主問題と双対問題が最適解をもつならば, 強相補性を満たす最適解が存在する.
+		\end{itembox}
+\end{frame}
+
+%\begin{frame}[fragile]
+%	\frametitle{参考文献}
+%\end{frame}
+
+\end{document}
