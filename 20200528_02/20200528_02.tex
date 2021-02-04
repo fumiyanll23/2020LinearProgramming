@@ -1,0 +1,269 @@
+%%% 中村研ゼミ第2回（2020/5/28実施）
+%%% 使用テキスト: 田村明久、村松正和『最適化法』（共立出版）
+
+\documentclass[unicode, 12pt, aspectratio = 43]{beamer}
+\usepackage{bxdpx-beamer}
+
+%%% テーマの指定、省略時は default になる
+\usetheme[progressbar = frametitle]{metropolis}
+%\usepackage{zxjatype}
+%\setCJKmainfont[Scale=0.95]{Meiryo}
+\usepackage{bm}
+\usepackage{color}
+%\usepackage{listings,jlisting}
+%\lstset{language={C}, basicstyle=\ttfamily\footnotesize,
+%	commentstyle=\textit, classoffset=1, frame=tRBl, framesep=5pt,
+%	numbers=left, stepnumber=1, numberstyle=\footnotesize, tabsize=2}
+%\usepackage{slashbox}
+%\usepackage{hyperref}
+\usepackage{ascmac}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+%\setsansfont[
+%	BoldFont={Fira Sans SemiBold},
+%	ItalicFont={Fira Sans Italic},
+%	BoldItalicFont={Fira Sans SemiBold Italic}
+%	]{Fira Sans}
+	
+%%%  日本語フォントをゴシックに、数式フォントを太字に変更する
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\mathversion{bold}
+
+%%% 著者の情報など
+\title{第2回}
+\subtitle{標準形と双対問題} % 省略可
+\author{171-T7710　成田 史弥}
+\institute{工学部　数理工学科　城本研究室}
+\date{} % 省略すると自動挿入
+
+%%% 以下、スライド
+\begin{document}
+
+%%% cover page
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{発表内容}
+	\begin{enumerate}
+		\item (Remember)線形計画問題 % テキストの該当範囲も提示
+		\item 不等式標準形
+		\item 等式標準形
+		\item 双対問題
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{(Remember)線形計画問題}
+	\begin{itembox}[l]{Def. 1.2.a（線形計画問題）}
+		\begin{itemize}
+			\item 実定数 $a_{ij}, b_{i}, c_{j}(i = 1, \dots, m; j = 1, \dots, n)$
+			\item 実変数 $x_{j}(j = 1, \dots, n)$
+			\item $0 \le \ell \le m$
+		\end{itemize}
+		最小化 \ $c_1x_1+ \dots+ c_nx_n$ \\
+		条件 \ $a_{i1}x_1 + \dots+ a_{in}x_n \le b_i \ (i = 1, \dots, \ell)$ \\
+		\   $a_{i1}x_1 + \dots+ a_{in}x_n = b_i \ (i = \ell+1, \dots, m)$
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{(Remember)線形計画問題}
+	\begin{itembox}[l]{Def. 1.2.a（線形計画問題）}
+		\begin{itemize}
+			\item 実定数 $a_{ij}, b_i, c_j(i = 1, \dots, m; j = 1, \dots, n)$
+			\item 実変数 $x_j(j = 1, \dots, n)$
+			\item $0 \le \ell \le m$
+		\end{itemize}
+		最小化 \ $c_1x_1+ \dots+ c_nx_n$ \\
+		条件 \ $a_{i1}x_1 + \dots+ a_{in}x_n \le b_i \ (i = 1, \dots, \ell)$ \\
+		\   $a_{i1}x_1 + \dots+ a_{in}x_n = b_i \ (i = \ell+1, \dots, m)$
+	\end{itembox}
+	\begin{itemize}
+		\item 目的関数も制約式も1次式（線形）である
+		\item 制約式の本数が有限である
+		\item 制約不等式が等号つきである
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{不等式標準形}
+	\begin{itembox}[l]{Def. 2.1.a（不等式標準形）}
+		\begin{itemize}
+			\item 実定数 $a_{ij}, b_i, c_j(i = 1, \dots, m; j = 1, \dots, n)$
+			\item 実変数 $x_j(j = 1, \dots, n)$
+			\item $0 \le \ell \le m$
+		\end{itemize}
+		最小化 \ $c_1x_1+ \dots+ c_nx_n$ \\
+		条件 \ $a_{i1}x_1 + \dots+ a_{in}x_n \ge b_i \ (i = 1, \dots, m)$ \\
+		\   $x_j \ge 0 \ (j = 1, \dots, n)$
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{不等式標準形}
+	\begin{itembox}[l]{Def. 2.1.a（不等式標準形）}
+		\begin{itemize}
+			\item 行列
+\[
+  A = \left(
+    \begin{array}{cccc}
+      a_{11} & \ldots & a_{1n} \\
+      \vdots & \ddots & \vdots \\
+      a_{m1} & \ldots & a_{mn}
+    \end{array}
+  \right)
+\]	
+			\item ベクトル ${\bf b} = (b_1, \dots, b_m)^T$
+			\item ベクトル ${\bf c} = (c_1, \dots, c_m)^T$
+			\item ベクトル ${\bf x} = (x_1, \dots, x_m)^T$
+		\end{itemize}
+		
+		最小化 \ ${\bf c}^T {\bf x}$ \\
+		条件 \ $A{\bf x} \ge {\bf b}, {\bf x} \ge {\bf 0}$
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{不等式標準形}
+	\begin{itembox}[l]{Def. 2.1.a（不等式標準形）}
+		最小化 \ ${\bf c}^T {\bf x}$ \\
+		条件 \ $A{\bf x} \ge {\bf b}, {\bf x} \ge {\bf 0}$
+	\end{itembox}
+	\begin{itemize}
+		\item 最小化問題である
+		\item 制約式が全て（左辺が大の）不等式である
+		\item 全ての変数が非負である
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{不等式標準形}
+	e.g.2.1) 次の線形計画問題は不等式標準形である: \\
+	最小化 \ $-2x_1 - x_2 - x_3$ \\
+	条件 \ $-2x_1 - 2x_2 + x_3 \ge -4$ \\
+	\   $-2x_1 - 4x_3 \ge -4$ \\
+	\   $4x_1 - 3x_2 + x_3 \ge -1$ \\
+	\   $x_1 \ge 0, x_2 \ge 0, x_3 \ge 0.$
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{不等式標準形}
+	\begin{itembox}[l]{Prop. 2.1}
+		任意の線形計画問題は不等式標準形に変換できる.
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{不等式標準形}
+	\begin{itemize}
+		\item 式の同値変形 \\
+		$\displaystyle \sum_{j=1}^n a_j x_j = b$
+		→$\displaystyle \sum_{j=1}^n a_j x_j \le b, \sum_{j=1}^n a_j x_j \ge b.$
+		\item $-1$倍 \\
+		最大化 $\displaystyle \sum_{j=1}^n c_j x_j$ → 最小化 $\displaystyle -\sum_{j=1}^n c_j x_j, $ \\
+		$\displaystyle \sum_{j=1}^n a_j x_j \le b$ → $\displaystyle -\sum_{j=1}^n a_j x_j \ge -b.$
+		\item 差による表現 \\
+		変数$x$（非負制約なし） \\
+		→$x = x_1 - x_2, x_1 \ge 0, x_2 \ge 0.$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{等式標準形}
+	\begin{itembox}[l]{Def. 2.1.b（等式標準形）}
+		最小化 \ $c_1x_1+ \dots+ c_nx_n$ \\
+		条件 \ $a_{i1}x_1 + \dots+ a_{in}x_n = b_i \ (i = 1, \dots, m)$ \\
+		\   $x_j \ge 0 \ (j = 1, \dots, n)$
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{等式標準形}
+	\begin{itembox}[l]{Def. 2.1.b（等式標準形）}
+		最小化 \ ${\bf c}^T {\bf x}$ \\
+		条件 \ $A{\bf x} = {\bf b}, {\bf x} \ge {\bf 0}$
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{等式標準形}
+	\begin{itembox}[l]{Prop. 2.2}
+		任意の線形計画問題は等式標準形に変換できる.
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{等式標準形}
+	e.g.2.2) e.g.2.1の不等式標準形は, 次のように等式標準形に変換される: \\
+	最小化 \ $-2x_1 - x_2 - x_3$ \\
+	条件 \ $-2x_1 - 2x_2 + x_3 - x_4 = -4$ \\
+	\   $-2x_1 - 4x_3  - x_5 = -4$ \\
+	\   $4x_1 - 3x_2 + x_3 - x_6 = -1$ \\
+	\   $x_1, x_2, x_3, x_4, x_5, x_6 \ge 0.$
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対問題}
+	e.g.2.1: \\
+	最小化 \ $-2x_1 - x_2 - x_3$ \\
+	条件 \ $-2x_1 - 2x_2 + x_3 \ge -4$ \\
+	\   $-2x_1 - 4x_3 \ge -4$ \\
+	\   $4x_1 - 3x_2 + x_3 \ge -1$ \\
+	\   $x_1 \ge 0, x_2 \ge 0, x_3 \ge 0.$
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対問題}
+	e.g.2.1の双対問題: \\
+	最大化 \ $-4y_1 - 4y_2 - y_3$ \\
+	条件 \ $-2y_1 - 2y_2 + 4y_3 \le -2$ \\
+	\   $-2y_1 - 3y_3 \le -1$ \\
+	\   $y_1 - 4y_2 + y_3 \le -1$ \\
+	\   $y_1 \ge 0, y_2 \ge 0, y_3 \ge 0.$
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対問題}
+	\begin{itembox}[l]{Def. 2.2.a（主問題）}
+		最小化 \ ${\bf c}^T {\bf x}$ \\
+		条件 \ $A{\bf x} \ge {\bf b}, {\bf x} \ge {\bf 0}$
+	\end{itembox}
+	\begin{itembox}[l]{Def. 2.2.b（双対問題）}
+	\begin{itemize}
+		\item 変数ベクトル ${\bf y} \in \mathbb{R}^m$
+	\end{itemize}
+		最大化 \ ${\bf b}^T {\bf y}$ \\
+		条件 \ $A^T{\bf y} \le {\bf c}, {\bf y} \ge {\bf 0}$
+	\end{itembox}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対問題}
+	e.g.2.1)先の考え方を応用して, 等式標準形の双対問題について考察せよ.
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対問題}
+	等式標準形: \\
+	最小化 \ ${\bf c}^T {\bf x}$ \\
+	条件 \ $A{\bf x} = {\bf b}, {\bf x} \ge {\bf 0}.$
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{双対問題}
+	等式標準形: \\
+	最小化 \ ${\bf c}^T {\bf x}$ \\
+	条件 \ $A{\bf x} = {\bf b}, {\bf x} \ge {\bf 0}.$ \\ \vspace{1em}
+	等式標準形の双対問題: \\
+	最大化 \ ${\bf b}^T {\bf y}$ \\
+	条件 \ $A^T{\bf y} \le {\bf c}.$
+\end{frame}
+
+%\begin{frame}[fragile]
+%	\frametitle{参考文献}
+%\end{frame}
+
+\end{document}
